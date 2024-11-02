@@ -57,4 +57,3 @@ int main(void)
 	add_back("je test 2 ", &stock);
 	add_back("je test3 ", &stock);
 }
-// test
