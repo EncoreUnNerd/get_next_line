@@ -70,6 +70,8 @@ char	*get_next_line(int fd)
 	char					buffer[BUFFER_SIZE];
 	char					*res;
 
+	if (fd < 0)
+		return (NULL);
 	buffer[0] = '\0';
 	while (!check_if_endline(buffer))
 	{
@@ -80,7 +82,7 @@ char	*get_next_line(int fd)
 			buffer[read_r] = '\0';
 		add_back(buffer, &stock);
 	}
-	res = get_line(stock);
+	res = gett_line(stock);
 	clean_to_endline(&stock);
 	if (res[0] == '\0')
 		return (NULL);

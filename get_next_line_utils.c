@@ -78,18 +78,15 @@ int	opti(struct s_stock *current, char **res, int p)
 	return (len);
 }
 
-char	*get_line(struct s_stock *head)
+char	*gett_line(struct s_stock *head)
 {
-	struct s_stock	*current;
 	char			*res;
 	int				len;
 
-	current = head;
 	len = opti(head, &res, 0);
-	res = malloc(sizeof(char) * (len + 2));
+	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
-	current = head;
 	len = opti(head, &res, 1);
 	res[len] = '\0';
 	return (res);

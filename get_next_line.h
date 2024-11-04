@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 1
 # endif
 
 # include <stdlib.h>
@@ -27,7 +27,7 @@ struct s_stock
 };
 
 char	*get_next_line(int fd);
-char	*get_line(struct s_stock *head);
+char	*gett_line(struct s_stock *head);
 void	clean_to_endline(struct s_stock **head);
 int		check_if_endline(char *str);
 void	add_back(char *value, struct s_stock **head);
