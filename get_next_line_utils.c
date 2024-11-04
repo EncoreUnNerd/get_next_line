@@ -12,42 +12,27 @@
 
 #include "get_next_line.h"
 
-char	*ft_strdup(const char *src)
+struct s_stock	*create_node(char	*value)
 {
-	char	*res;
-	int		src_len;
-	size_t	i;
+	struct s_stock	*node;
+	int				i;
 
-	src_len = 0;
-	while (src[src_len])
-		src_len++;
-	res = (char *)malloc(sizeof(char) * (src_len + 1));
-	if (!res)
-		return (NULL);
 	i = 0;
-	while (src[i])
+	node = malloc(sizeof(struct s_stock));
+	while (value[i])
 	{
-		res[i] = src[i];
+		node->value[i] = value[i];
 		i++;
 	}
-	res[i] = '\0';
-	return (res);
-}
-
-struct stock	*create_node(char	*value)
-{
-	struct stock	*node;
-
-	node = malloc(sizeof(struct stock));
-	node->value = ft_strdup(value);
+	node->value[i] = '\0';
 	node->next = NULL;
 	return (node);
 }
 
-void	add_back(char	*value, struct stock **head)
+void	add_back(char	*value, struct s_stock **head)
 {
-	struct stock	*new_node;
-	struct stock	*current;
+	struct s_stock	*new_node;
+	struct s_stock	*current;
 
 	new_node = create_node(value);
 	if (*head == NULL)
@@ -61,17 +46,14 @@ void	add_back(char	*value, struct stock **head)
 	current->next = new_node;
 }
 
-void	pop_front(struct stock **head)
+void	pop_front(struct s_stock **head)
 {
-	struct stock	*temp;
+	struct s_stock	*temp;
 
 	if (*head == NULL)
-	{
 		return ;
-	}
 	temp = *head;
 	*head = (*head)->next;
-	free(temp->value);
 	free(temp);
 }
 
@@ -89,18 +71,21 @@ int	check_if_endline(char	*str)
 	return (0);
 }
 
-void	clean_to_endline(struct stock **head)
+void	clean_to_endline(struct s_stock **head)
 {
 	int		i;
+	int		l;
 
 	i = 0;
+	l = 0;
 	while (*head != NULL)
 	{
 		if (check_if_endline((*head)->value))
 		{
 			while ((*head)->value[i] != '\n')
 				i++;
-			(*head)->value = ft_strdup(&(*head)->value[++i]);
+			while ((*head)->value[++i])
+				(*head)->value[l++] = (*head)->value[i];
 			break ;
 		}
 		else
@@ -108,9 +93,9 @@ void	clean_to_endline(struct stock **head)
 	}
 }
 
-char	*get_line(struct stock *head)
+char	*get_line(struct s_stock *head)
 {
-	struct stock	*current;
+	struct s_stock	*current;
 	char			*res;
 	int				i;
 	int				len;

@@ -22,13 +22,14 @@
 
 struct s_stock
 {
-	char			*value;
-	struct stock	*next;
+	char			value[BUFFER_SIZE];
+	struct s_stock	*next;
 };
 
-char	*get_line(struct stock *head);
-void	clean_to_endline(struct stock **head);
+char	*get_next_line(int fd);
+char	*get_line(struct s_stock *head);
+void	clean_to_endline(struct s_stock **head);
 int		check_if_endline(char *str);
-void	add_back(char *value, struct stock **head);
+void	add_back(char *value, struct s_stock **head);
 
 #endif
