@@ -11,40 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-struct s_stock	*create_node(char	*value)
-{
-	struct s_stock	*node;
-	int				i;
-
-	i = 0;
-	node = malloc(sizeof(struct s_stock));
-	while (value[i])
-	{
-		node->value[i] = value[i];
-		i++;
-	}
-	node->value[i] = '\0';
-	node->next = NULL;
-	return (node);
-}
-
-void	add_back(char	*value, struct s_stock **head)
-{
-	struct s_stock	*new_node;
-	struct s_stock	*current;
-
-	new_node = create_node(value);
-	if (*head == NULL)
-	{
-		*head = new_node;
-		return ;
-	}
-	current = *head;
-	while (current->next != NULL)
-		current = current->next;
-	current->next = new_node;
-}
+#include <stdlib.h>
 
 void	pop_front(struct s_stock **head)
 {
@@ -57,84 +24,73 @@ void	pop_front(struct s_stock **head)
 	free(temp);
 }
 
-int	check_if_endline(char	*str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void	clean_to_endline(struct s_stock **head)
 {
+	char	temp[BUFFER_SIZE];
 	int		i;
 	int		l;
 
+	while (*head && !check_if_endline((*head)->value))
+		pop_front(head);
+	if (!*head)
+		return ;
 	i = 0;
 	l = 0;
-	while (*head != NULL)
+	while ((*head)->value[i] != '\n')
+		i++;
+	i++;
+	while (i < BUFFER_SIZE)
+		temp[l++] = (*head)->value[i++];
+	temp[l] = '\0';
+	i = 0;
+	while (i < BUFFER_SIZE)
 	{
-		if (check_if_endline((*head)->value))
+		(*head)->value[i] = temp[i];
+		i++;
+	}
+}
+
+int	opti(struct s_stock *current, char **res, int p)
+{
+	int	i;
+	int	len;
+
+	len = 0;
+	while (current != NULL)
+	{
+		i = 0;
+		while (i < BUFFER_SIZE && (current->value[i] != '\n')
+			&& (current->value[i] != '\0'))
 		{
-			while ((*head)->value[i] != '\n')
-				i++;
-			while ((*head)->value[++i])
-				(*head)->value[l++] = (*head)->value[i];
+			if (p == 1)
+				(*res)[len] = current->value[i];
+			len++;
+			i++;
+		}
+		if (current->value[i] == '\n')
+		{
+			if (p == 1)
+				(*res)[len++] = '\n';
 			break ;
 		}
-		else
-			pop_front(&(*head));
+		current = current->next;
 	}
+	return (len);
 }
 
 char	*get_line(struct s_stock *head)
 {
 	struct s_stock	*current;
 	char			*res;
-	int				i;
 	int				len;
 
 	current = head;
-	i = 0;
-	len = 0;
-	while (current != NULL)
-	{
-		while (current->value[i] && current->value[i] != '\n')
-		{
-			len++;
-			i++;
-		}
-		if (current->value[i] == '\n')
-			break ;
-		i = 0;
-		current = current->next;
-	}
+	len = opti(head, &res, 0);
 	res = malloc(sizeof(char) * (len + 2));
+	if (!res)
+		return (NULL);
 	current = head;
-	len = 0;
-	i = 0;
-	while (current != NULL)
-	{
-		while (current->value[i] && current->value[i] != '\n')
-		{
-			res[len] = current->value[i];
-			len++;
-			i++;
-		}
-		if (current->value[i] == '\n')
-		{
-			res[len++] = '\n';
-			break ;
-		}
-		i = 0;
-		current = current->next;
-	}
+	len = opti(head, &res, 1);
 	res[len] = '\0';
 	return (res);
 }
