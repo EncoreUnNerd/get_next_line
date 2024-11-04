@@ -20,9 +20,13 @@ struct s_stock	*create_node(char	*value)
 	struct s_stock	*node;
 	int				i;
 
-	i = 0;
+	if (!value)
+		return (NULL);
 	node = malloc(sizeof(struct s_stock));
-	while (value[i])
+	if (!node)
+		return (NULL);
+	i = 0;
+	while (value[i] && i < BUFFER_SIZE - 1)
 	{
 		node->value[i] = value[i];
 		i++;
@@ -67,25 +71,35 @@ char	*get_next_line(int fd)
 {
 	static struct s_stock	*stock;
 	int						read_r;
-	char					buffer[BUFFER_SIZE];
+	char					buffer[BUFFER_SIZE + 1];
 	char					*res;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		while (stock)
+			pop_front(&stock);
 		return (NULL);
-	buffer[0] = '\0';
+	}
+	ft_memset(buffer, 0, BUFFER_SIZE + 1);
 	while (!check_if_endline(buffer))
 	{
 		read_r = read(fd, buffer, BUFFER_SIZE);
-		if (read_r <= 0)
-			break ;
-		if (read_r < BUFFER_SIZE)
-			buffer[read_r] = '\0';
-		add_back(buffer, &stock);
+		if (read_r < 0)
+		{
+			while (stock)
+				pop_front(&stock);
+			return (NULL);
+		}
+		if (read_r == 0)
+			break;
+		buffer[read_r] = '\0';
+		if (!add_back(buffer, &stock))
+			return (NULL);
 	}
+	if (!stock)
+		return (NULL);
 	res = gett_line(stock);
 	clean_to_endline(&stock);
-	if (res[0] == '\0')
-		return (NULL);
 	return (res);
 }
 

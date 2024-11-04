@@ -26,24 +26,28 @@ void	pop_front(struct s_stock **head)
 
 void	clean_to_endline(struct s_stock **head)
 {
-	char	temp[BUFFER_SIZE];
+	char	temp[BUFFER_SIZE + 1];
 	int		i;
 	int		l;
 
+	if (!head || !*head)
+		return;
 	while (*head && !check_if_endline((*head)->value))
 		pop_front(head);
 	if (!*head)
-		return ;
+		return;
 	i = 0;
 	l = 0;
-	while ((*head)->value[i] != '\n')
+	while (i < BUFFER_SIZE && (*head)->value[i] != '\n')
 		i++;
-	i++;
-	while (i < BUFFER_SIZE)
+	if ((*head)->value[i] == '\n')
+		i++;
+	while (i < BUFFER_SIZE && (*head)->value[i])
 		temp[l++] = (*head)->value[i++];
 	temp[l] = '\0';
+	ft_memset((*head)->value, 0, BUFFER_SIZE);
 	i = 0;
-	while (i < BUFFER_SIZE)
+	while (temp[i] && i < BUFFER_SIZE)
 	{
 		(*head)->value[i] = temp[i];
 		i++;
@@ -80,14 +84,30 @@ int	opti(struct s_stock *current, char **res, int p)
 
 char	*gett_line(struct s_stock *head)
 {
-	char			*res;
-	int				len;
+	char	*res;
+	int		len;
 
-	len = opti(head, &res, 0);
+	if (!head)
+		return (NULL);
+	len = opti(head, NULL, 0);
+	if (len <= 0)
+		return (NULL);
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
-	len = opti(head, &res, 1);
+	opti(head, &res, 1);
 	res[len] = '\0';
 	return (res);
+}
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	unsigned char	*ptr;
+	size_t		i;
+
+	ptr = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+		ptr[i++] = (unsigned char)c;
+	return (s);
 }
