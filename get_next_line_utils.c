@@ -67,8 +67,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	while (s2[i])
 		res[l++] = s2[i++];
-	free((char *)s1);
-	free((char *)s2);
 	res[l] = '\0';
 	return (res);
 }
