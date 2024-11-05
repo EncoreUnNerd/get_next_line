@@ -44,16 +44,21 @@ char	*reading(int fd, char	*readed)
 char	*get_next_line(int fd)
 {
 	char		*res;
+	char 		*tmp;
 	static char	*readed;
+
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	readed = reading(fd, readed);
 	if (!readed)
 		return (NULL);
 	res = get_to_line(readed);
-	readed = ft_strrchr(readed, '\n');
+	tmp = readed;
+	free(readed);
+	readed = ft_strrchr(tmp, '\n');
 	if (!readed)
 		free(readed);
+	free(tmp);
 	return (res);
 }
 
