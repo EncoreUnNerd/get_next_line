@@ -14,9 +14,25 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
+
+char	*ft_strdup(const char *src)
+{
+	char	*res;
+	size_t	i;
+
+	res = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (src[i])
+	{
+		res[i] = src[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
 char	*reading(int fd, char	*readed)
 {
 	char	*buffer;
@@ -53,7 +69,7 @@ char	*get_next_line(int fd)
 	if (!readed)
 		return (NULL);
 	res = get_to_line(readed);
-	tmp = readed;
+	tmp = ft_strdup(readed);
 	free(readed);
 	readed = ft_strrchr(tmp, '\n');
 	if (!readed)
