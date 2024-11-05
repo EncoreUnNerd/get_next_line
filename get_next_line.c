@@ -57,16 +57,16 @@ char	*get_next_line(int fd)
 	return (res);
 }
 
-int	main(void)
-{
-	char	*te;
-	int		fd;
+// int	main(void)
+// {
+// 	char	*te;
+// 	int		fd;
 
-	fd = open("exemple.txt", O_RDONLY);
-	te = get_next_line(fd);
-	while(te != NULL)
-	{
-		printf("%s", te);
-		te = get_next_line(fd);
-	}
-}
+// 	fd = open("exemple.txt", O_RDONLY);
+// 	te = get_next_line(fd);
+// 	while(te != NULL)
+// 	{
+// 		printf("%s", te);
+// 		te = get_next_line(fd);
+// 	}
+// }
