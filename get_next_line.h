@@ -26,5 +26,6 @@ char	*get_to_line(char *readed);
 char	*ft_strrchr(const char *str, int l);
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
 #endif

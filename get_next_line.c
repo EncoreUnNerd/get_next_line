@@ -15,28 +15,12 @@
 #include <stdio.h>
 
 
-char	*ft_strdup(const char *src)
-{
-	char	*res;
-	size_t	i;
-
-	res = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (src[i])
-	{
-		res[i] = src[i];
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
-}
-
 char	*reading(int fd, char	*readed)
 {
 	char	*buffer;
 	int		rd_bytes;
+	char	*temp;
+
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
@@ -52,7 +36,14 @@ char	*reading(int fd, char	*readed)
 		if (rd_bytes == 0)
 			break ;
 		buffer[rd_bytes] = '\0';
+		temp = readed;
 		readed = ft_strjoin(readed, buffer);
+		free(temp);
+		if (!readed)
+		{
+			free(buffer);
+			return (NULL);
+		}
 	}
 	free(buffer);
 	return (readed);
@@ -60,7 +51,7 @@ char	*reading(int fd, char	*readed)
 char	*get_next_line(int fd)
 {
 	char		*res;
-	char 		*tmp;
+	char		*new_readed;
 	static char	*readed;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -69,12 +60,32 @@ char	*get_next_line(int fd)
 	if (!readed)
 		return (NULL);
 	res = get_to_line(readed);
-	tmp = ft_strdup(readed);
-	free(readed);
-	readed = ft_strrchr(tmp, '\n');
-	if (!readed)
+	if (!res)
+		return (NULL);
+	// Trouver la position du caractère '\n' dans readed
+	char *newline_pos = ft_strchr(readed, '\n');
+	if (newline_pos)
+	{
+		// Calculer la longueur de la partie restante après '\n'
+		size_t remaining_length = ft_strlen(newline_pos + 1);
+		// Allouer de la mémoire pour la nouvelle readed
+		new_readed = malloc(sizeof(char) * (remaining_length + 1));
+		if (!new_readed)
+		{
+			free(res);
+			return (NULL);
+		}
+		// Copier la partie restante dans new_readed
+		ft_strlcpy(new_readed, newline_pos + 1, remaining_length + 1);
 		free(readed);
-	free(tmp);
+		readed = new_readed;
+	}
+	else
+	{
+		// Si pas de '\n', libérer readed et le mettre à NULL
+		free(readed);
+		readed = NULL;
+	}
 	return (res);
 }
 
