@@ -41,14 +41,13 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*res;
 	int		i;
 	int		l;
 	size_t	s1_len;
 	size_t	s2_len;
-
 	i = 0;
 	l = 0;
 	if (!s1)

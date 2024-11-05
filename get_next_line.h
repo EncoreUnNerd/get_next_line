@@ -21,7 +21,7 @@
 # endif
 
 char	*ft_strchr(const char *str, int l);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 char	*get_to_line(char *readed);
 char	*ft_strrchr(const char *str, int l);
 char	*get_next_line(int fd);

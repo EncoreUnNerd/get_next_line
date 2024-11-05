@@ -14,12 +14,13 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+#include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
 char	*reading(int fd, char	*readed)
 {
 	char	*buffer;
 	int		rd_bytes;
-	char	*temp;
-
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
@@ -35,44 +36,37 @@ char	*reading(int fd, char	*readed)
 		if (rd_bytes == 0)
 			break ;
 		buffer[rd_bytes] = '\0';
-		temp = readed;
 		readed = ft_strjoin(readed, buffer);
-		free(temp);
 	}
 	free(buffer);
 	return (readed);
 }
-
 char	*get_next_line(int fd)
 {
 	char		*res;
 	static char	*readed;
-	char		*temp;
-
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	readed = reading(fd, readed);
 	if (!readed)
 		return (NULL);
 	res = get_to_line(readed);
-	temp = readed;
 	readed = ft_strrchr(readed, '\n');
 	if (!readed)
-        free(readed);
-	free(temp);
+		free(readed);
 	return (res);
 }
 
-// int	main(void)
-// {
-// 	char	*te;
-// 	int		fd;
+int	main(void)
+{
+	char	*te;
+	int		fd;
 
-// 	fd = open("exemple.txt", O_RDONLY);
-// 	te = get_next_line(fd);
-// 	while(te != NULL)
-// 	{
-// 		printf("%s", te);
-// 		te = get_next_line(fd);
-// 	}
-// }
+	fd = open("exemple.txt", O_RDONLY);
+	te = get_next_line(fd);
+	while(te != NULL)
+	{
+		printf("%s", te);
+		te = get_next_line(fd);
+	}
+}
