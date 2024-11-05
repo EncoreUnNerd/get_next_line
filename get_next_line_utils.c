@@ -106,5 +106,6 @@ char	*get_to_line(char *readed)
 	if (readed[i] == '\n')
 		res[i++] = '\n';
 	res[i] = '\0';
+	free(readed);
 	return (res);
 }
