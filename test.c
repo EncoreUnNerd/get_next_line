@@ -73,6 +73,7 @@ char	*clear(char *str)
 		}
 		i++;
 	}
+	free(str);
 	return (NULL);
 }
 
@@ -109,7 +110,7 @@ int	main(void)
 	te = ft_strjoin(te, "cacaboudin");
 	te = ft_strjoin(te, "cacaboudin");
 	te = ft_strjoin(te, "cacabo\tudin");
-	te = ft_strjoin(te, "caca\nboudin");
+	te = ft_strjoin(te, "cacaboudin");
 	te = ft_strjoin(te, "cacaboudin");
 	te = ft_strjoin(te, "cacab");
 	res = ft_get_line(te);
