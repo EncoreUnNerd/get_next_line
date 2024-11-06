@@ -13,17 +13,16 @@ size_t	ft_strlen(const char *str)
 
 char	*ft_strdup(const char *s1)
 {
-	char	*s2;
+	char	*new;
 	int		i;
 
-	s2 = (char *)s1;
 	i = 0;
-	char *new = (char *)malloc(sizeof(char) * (ft_strlen(s2) + 1));
+	new = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (new == NULL)
 		return (NULL);
-	while (s2[i])
+	while (s1[i])
 	{
-		new[i] = s2[i];
+		new[i] = s1[i];
 		i++;
 	}
 	new[i] = '\0';
@@ -39,8 +38,6 @@ char	*ft_strjoin(char *s1, const char *s2)
 	i = 0;
 	if (s1 == NULL)
 		return (ft_strdup(s2));
-	if (s2 == NULL)
-		return (ft_strdup(s1));
 	s3 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (s3 == NULL)
 	{
@@ -60,7 +57,7 @@ char	*ft_strjoin(char *s1, const char *s2)
 	return (s3);
 }
 
-int main()
+int	main(void)
 {
 	char	*te;
 
