@@ -14,12 +14,11 @@ size_t	ft_strlen(const char *str)
 char	*ft_strdup(const char *s1)
 {
 	char	*s2;
-	char	*new;
 	int		i;
 
 	s2 = (char *)s1;
 	i = 0;
-	new = (char *)malloc(sizeof(char) * ft_strlen(s2) + 1);
+	char *new = (char *)malloc(sizeof(char) * (ft_strlen(s2) + 1));
 	if (new == NULL)
 		return (NULL);
 	while (s2[i])
@@ -31,7 +30,7 @@ char	*ft_strdup(const char *s1)
 	return (new);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, const char *s2)
 {
 	char	*s3;
 	int		i;
@@ -44,20 +43,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (ft_strdup(s1));
 	s3 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (s3 == NULL)
+	{
+		free(s1);
 		return (NULL);
+	}
 	j = 0;
 	while (s1[i])
 	{
 		s3[i] = s1[i];
 		i++;
 	}
-	free((char *)s1);
 	while (s2[j])
 		s3[i++] = s2[j++];
 	s3[i] = '\0';
+	free(s1);
 	return (s3);
 }
-
 
 int main()
 {
@@ -71,6 +72,7 @@ int main()
 	te = ft_strjoin(te, "cacaboudin");
 	te = ft_strjoin(te, "cacaboudin");
 	te = ft_strjoin(te, "cacab\noudin");
-	printf("%s", te);
+	printf("%s\n", te);
 	free(te);
+	return (0);
 }
