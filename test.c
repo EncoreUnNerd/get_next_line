@@ -51,6 +51,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		s3[i] = s1[i];
 		i++;
 	}
+	free((char *)s1);
 	while (s2[j])
 		s3[i++] = s2[j++];
 	s3[i] = '\0';
