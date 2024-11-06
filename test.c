@@ -57,6 +57,25 @@ char	*ft_strjoin(char *s1, const char *s2)
 	return (s3);
 }
 
+char	*clear(char *str)
+{
+	int		i;
+	char	*res;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n' && str[i + 1] != '\0')
+		{
+			res = ft_strdup(&str[i + 1]);
+			free(str);
+			return (res);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 int	main(void)
 {
 	char	*te;
@@ -69,6 +88,8 @@ int	main(void)
 	te = ft_strjoin(te, "cacaboudin");
 	te = ft_strjoin(te, "cacaboudin");
 	te = ft_strjoin(te, "cacab\noudin");
+	printf("%s\n", te);
+	te = clear(te);
 	printf("%s\n", te);
 	free(te);
 	return (0);
