@@ -76,9 +76,33 @@ char	*clear(char *str)
 	return (NULL);
 }
 
+char	*ft_get_line(char	*str)
+{
+	char	*res;
+	int		i;
+
+	i = 0;
+	while (str[i] != '\n' && str[i])
+		i++;
+	if (str[i] == '\n')
+		i++;
+	res = (char *)malloc(sizeof(char) * (i + 1));
+	i = 0;
+	while (str[i] != '\n' && str[i])
+	{
+		res[i] = str[i];
+		i++;
+	}
+	if (str[i] == '\n')
+		res[i++] = '\n';
+	res[i] = '\0';
+	return (res);
+}
+
 int	main(void)
 {
 	char	*te;
+	char	*res;
 
 	te = NULL;
 	te = ft_strjoin(te, "1cacaboudin");
@@ -87,10 +111,11 @@ int	main(void)
 	te = ft_strjoin(te, "cacabo\tudin");
 	te = ft_strjoin(te, "cacaboudin");
 	te = ft_strjoin(te, "cacaboudin");
-	te = ft_strjoin(te, "cacab\noudin");
-	printf("%s\n", te);
+	te = ft_strjoin(te, "cacab");
+	res = ft_get_line(te);
+	printf("%s-1", res);
 	te = clear(te);
-	printf("%s\n", te);
+	printf("%s-2", te);
 	free(te);
 	return (0);
 }
