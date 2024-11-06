@@ -116,6 +116,7 @@ int	main(void)
 	printf("%s-1", res);
 	te = clear(te);
 	printf("%s-2", te);
+	free(res);
 	free(te);
 	return (0);
 }
