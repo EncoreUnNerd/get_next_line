@@ -13,6 +13,7 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int	ft_is_endline(const char *buffer)
 {
@@ -30,13 +31,14 @@ int	ft_is_endline(const char *buffer)
 
 char	*get_next_line(int fd)
 {
-	char		buffer[BUFFER_SIZE + 1];
+	char		*buffer;
 	int			rd_bytes;
 	char		*res;
 	static char	*stock;
 
-	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, buffer, 0) < 0)
-		return (NULL);
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (fd < 0 || BUFFER_SIZE < 0 || !buffer)
+		return (free(buffer), NULL);
 	rd_bytes = 1;
 	while (rd_bytes > 0)
 	{
@@ -44,7 +46,7 @@ char	*get_next_line(int fd)
 		if (rd_bytes < 0)
 		{
 			free(stock);
-			return (NULL);
+			return (free(buffer), NULL);
 		}
 		buffer[rd_bytes] = '\0';
 		stock = ft_strjoin(stock, buffer);
@@ -53,7 +55,7 @@ char	*get_next_line(int fd)
 	}
 	res = ft_get_line(stock);
 	stock = clear(stock);
-	return (res);
+	return (free(buffer), res);
 }
 
 // int	main(void)
