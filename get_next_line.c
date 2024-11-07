@@ -44,7 +44,7 @@ char	*get_next_line(int fd)
 		if (rd_bytes < 0)
 		{
 			free(stock);
-			return(NULL);
+			return (NULL);
 		}
 		buffer[rd_bytes] = '\0';
 		stock = ft_strjoin(stock, buffer);
@@ -56,16 +56,17 @@ char	*get_next_line(int fd)
 	return (res);
 }
 
-int	main(void)
-{
-	char	*te;
-	int		fd;
+// int	main(void)
+// {
+// 	char	*te;
+// 	int		fd;
 
-	fd = open("exemple.txt", O_RDONLY);
-	te = get_next_line(fd);
-	while (te != NULL)
-	{
-		printf("%s", te);
-		te = get_next_line(fd);
-	}
-}
+// 	fd = open("exemple.txt", O_RDONLY);
+// 	te = get_next_line(fd);
+// 	while (te != NULL)
+// 	{
+// 		printf("%s", te);
+// 		free(te);
+// 		te = get_next_line(fd);
+// 	}
+// }
