@@ -49,7 +49,7 @@ char	*get_next_line(int fd)
 		buffer[rd_bytes] = '\0';
 		res = ft_strjoin(res, buffer);
 		if (rd_bytes == 0)
-			return (NULL);
+			return (free(res), NULL);
 		if (ft_is_endline(buffer) || rd_bytes < BUFFER_SIZE)
 		{
 			clean_buff(buffer);
