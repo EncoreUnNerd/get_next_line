@@ -34,7 +34,7 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	int			rd_bytes;
 	char		*res;
-	static char	*stock;
+	static char	*stock = NULL;
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE < 0 || !buffer)
