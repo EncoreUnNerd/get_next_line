@@ -21,5 +21,8 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char *s1, const char *s2);
+void	clean_buff(char	buffer[BUFFER_SIZE + 1]);
 
 #endif
