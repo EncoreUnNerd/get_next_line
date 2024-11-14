@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 size_t	ft_strlen(const char *str)
 {
@@ -35,12 +36,6 @@ char	*ft_strdup(const char *s1)
 	{
 		new[i] = s1[i];
 		i++;
-		if (s1[i] == '\n')
-		{
-			new[i] = '\n';
-			i++;
-			break ;
-		}
 	}
 	new[i] = '\0';
 	return (new);
@@ -57,7 +52,10 @@ char	*ft_strjoin(char *s1, const char *s2)
 		return (ft_strdup(s2));
 	s3 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (s3 == NULL)
-		return (free(s1), NULL);
+	{
+		free(s1);
+		return (NULL);
+	}
 	j = 0;
 	while (s1[i])
 	{
@@ -65,45 +63,57 @@ char	*ft_strjoin(char *s1, const char *s2)
 		i++;
 	}
 	while (s2[j])
-	{
 		s3[i++] = s2[j++];
-		if (s2[j] == '\n')
-		{
-			s3[i] = '\n';
-			i++;
-			break ;
-		}
-	}
 	s3[i] = '\0';
 	free(s1);
 	return (s3);
 }
 
-char	*ft_strcpy(char *dest, char *src, int start)
+char	*clear(char *str)
 {
 	int		i;
-	char	temp_letter;
+	char	*res;
 
 	i = 0;
-	while (src[start] != '\0')
+	while (str[i] != '\0')
 	{
-		temp_letter = src[start];
-		dest[i] = temp_letter;
-		++i;
-		++start;
+		if (str[i] == '\n' && str[i + 1] == '\0')
+			break ;
+		if (str[i] == '\n')
+		{
+			res = ft_strdup(&str[i + 1]);
+			free(str);
+			return (res);
+		}
+		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	free(str);
+	return (NULL);
 }
 
-void	clean_buff(char	buffer[BUFFER_SIZE + 1])
+char	*ft_get_line(const char	*str)
 {
-	char	temp[BUFFER_SIZE + 1];
+	char	*res;
 	int		i;
 
 	i = 0;
-	while(buffer[i] != '\n' && buffer[i])
+	if (str[i] == '\0')
+		return (NULL);
+	while (str[i] != '\n' && str[i])
 		i++;
-	ft_strcpy(temp, buffer, i + 1);
-	ft_strcpy(buffer, temp, 0);
+	if (str[i] == '\n')
+		i++;
+	res = (char *)malloc(sizeof(char) * (i + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (str[i] != '\n' && str[i])
+	{
+		res[i] = str[i];
+		i++;
+	}
+	if (str[i] == '\n')
+		res[i++] = '\n';
+	res[i] = '\0';
+	return (res);
 }

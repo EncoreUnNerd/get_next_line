@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "fcntl.h"
-#include "stdio.h"
+#include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int	ft_is_endline(const char *buffer)
 {
@@ -31,50 +31,44 @@ int	ft_is_endline(const char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE + 1];
+	char		*buffer;
 	int			rd_bytes;
 	char		*res;
+	static char	*stock = NULL;
 
-	res = NULL;
-	if (fd < 0 || BUFFER_SIZE < 0)
-		return (NULL);
-	if (buffer[0] != '\0')
-	{
-		res = ft_strjoin(res, buffer);
-		if (ft_is_endline(buffer))
-		{
-			clean_buff(buffer);
-			return (res);
-		}
-	}
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (fd < 0 || BUFFER_SIZE < 0 || !buffer)
+		return (free(buffer), NULL);
 	rd_bytes = 1;
 	while (rd_bytes > 0)
 	{
 		rd_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (rd_bytes < 0)
-			return (NULL);
-		buffer[rd_bytes] = '\0';
-		res = ft_strjoin(res, buffer);
-		if (rd_bytes == 0)
-			return (free(res), NULL);
-		if (ft_is_endline(buffer) || rd_bytes < BUFFER_SIZE)
 		{
-			clean_buff(buffer);
-			break ;
+			free(stock);
+			return (free(buffer), NULL);
 		}
+		buffer[rd_bytes] = '\0';
+		stock = ft_strjoin(stock, buffer);
+		if (ft_is_endline(stock))
+			break ;
 	}
-	return (res);
+	res = ft_get_line(stock);
+	stock = clear(stock);
+	return (free(buffer), res);
 }
 
-int main(void)
+int	main(void)
 {
-	int fd = open("exemple.txt", O_RDONLY);
-	char *te = get_next_line(fd);
+	char	*te;
+	int		fd;
+
+	fd = open("exemple.txt", O_RDONLY);
+	te = get_next_line(fd);
 	while (te != NULL)
 	{
 		printf("%s", te);
 		free(te);
 		te = get_next_line(fd);
 	}
-	return (0);
 }
