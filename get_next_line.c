@@ -39,7 +39,14 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	if (buffer[0] != '\0')
-		res = ft_strdup(buffer);
+	{
+		res = ft_strjoin(res, buffer);
+		if (ft_is_endline(buffer))
+		{
+			clean_buff(buffer);
+			return (res);
+		}
+	}
 	rd_bytes = 1;
 	while (rd_bytes > 0)
 	{
@@ -59,16 +66,15 @@ char	*get_next_line(int fd)
 	return (res);
 }
 
-int main(void)
-{
-	int fd = open("exemple.txt", O_RDONLY);
-	char *te = get_next_line(fd);
-
-	while (te != NULL)
-	{
-		printf("%s", te);
-		free(te);
-		te = get_next_line(fd);
-	}
-	return (0);
-}
+// int main(void)
+// {
+// 	int fd = open("exemple.txt", O_RDONLY);
+// 	char *te = get_next_line(fd);
+// 	while (te != NULL)
+// 	{
+// 		printf("%s", te);
+// 		free(te);
+// 		te = get_next_line(fd);
+// 	}
+// 	return (0);
+// }
