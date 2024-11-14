@@ -67,6 +67,7 @@ int main(void)
 	while (te != NULL)
 	{
 		printf("%s", te);
+		free(te);
 		te = get_next_line(fd);
 	}
 	return (0);

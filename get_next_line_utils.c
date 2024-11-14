@@ -96,7 +96,6 @@ char	*ft_strcpy(char *dest, char *src, int start)
 	return (dest);
 }
 
-#include <stdio.h>
 void	clean_buff(char	buffer[BUFFER_SIZE + 1])
 {
 	char	temp[BUFFER_SIZE + 1];
