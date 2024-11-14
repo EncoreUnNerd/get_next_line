@@ -66,15 +66,15 @@ char	*get_next_line(int fd)
 	return (res);
 }
 
-// int main(void)
-// {
-// 	int fd = open("exemple.txt", O_RDONLY);
-// 	char *te = get_next_line(fd);
-// 	while (te != NULL)
-// 	{
-// 		printf("%s", te);
-// 		free(te);
-// 		te = get_next_line(fd);
-// 	}
-// 	return (0);
-// }
+int main(void)
+{
+	int fd = open("exemple.txt", O_RDONLY);
+	char *te = get_next_line(fd);
+	while (te != NULL)
+	{
+		printf("%s", te);
+		free(te);
+		te = get_next_line(fd);
+	}
+	return (0);
+}
