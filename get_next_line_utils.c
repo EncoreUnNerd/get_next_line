@@ -25,7 +25,7 @@ char	*ft_strdup(char *src)
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (i < src_len + 1)
+	while (i < src_len)
 	{
 		res[i] = src[i];
 		i++;
@@ -43,9 +43,9 @@ char	*ft_strdup_till_return(char *src)
 	src_len = 0;
 	while (src[src_len] != '\n')
 		src_len++;
-	res = malloc(src_len + 1);
+	res = malloc(src_len + 2);
 	i = 0;
-	while (i < src_len + 1)
+	while (i <= src_len)
 	{
 		res[i] = src[i];
 		i++;
