@@ -49,21 +49,20 @@ char	*get_next_line(int fd)
 			break ;
 	}
 	res = get_line_decale(&stock);
+	if (res[0] == '\0')
+		return (free(res), NULL);
 	return (res);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
-int	main(void)
-{
-	int	fd = open("exemple.txt", O_RDONLY);
-	char	*te;
-	te = get_next_line(fd);
-	while (te != NULL)
-	{
-		printf("%s", te);
-		// free(te);
-		te = get_next_line(fd);
-	}
-	return (0);
-}
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	int	fd = open("exemple.txt", O_RDONLY);
+// 	char	*te;
+// 	te = get_next_line(fd);
+// 	printf("%s", te);
+// 	te = get_next_line(fd);
+// 	printf("%s", te);
+// 	return (0);
+// }
