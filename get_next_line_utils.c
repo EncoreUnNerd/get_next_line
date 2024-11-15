@@ -71,6 +71,8 @@ char	*get_line_decale(char	**stock)
 	char	*res;
 
 	i = 0;
+	if ((*stock) == NULL)
+		return (NULL);
 	while ((*stock)[i] != '\n' && (*stock)[i] != '\0')
 		i++;
 	if ((*stock)[i] == '\0')
