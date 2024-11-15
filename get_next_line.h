@@ -20,5 +20,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+char	*ft_strdup(const char *src);
+char	*ft_strdup_till_return(char *src);
+int		ft_strlen(const char *src);
+char	*get_line_decale(char	**stock);
+char	*ft_strjoin(char *s1, const char *s2);
+char	*get_next_line(int fd);
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_strdup(char *src)
+char	*ft_strdup(const char *src)
 {
 	char	*res;
 	int		src_len;
@@ -54,7 +54,7 @@ char	*ft_strdup_till_return(char *src)
 	return (res);
 }
 
-int	ft_strlen(char *src)
+int	ft_strlen(const char *src)
 {
 	int	i;
 
@@ -90,24 +90,26 @@ char	*get_line_decale(char	**stock)
 	}
 }
 
-#include <stdio.h>
-int main(void)
+char	*ft_strjoin(char *s1, const char *s2)
 {
-	char	*stock;
-	char	*res;
+	char	*s3;
+	int		i;
+	int		j;
 
-	stock = ft_strdup("je test la\n test de fou\nencore");
-	res = get_line_decale(&stock);
-	printf("[%s]\n",res);
-	free(res);
-	printf("(%s)", stock);
-	res = get_line_decale(&stock);
-	printf("[%s]\n",res);
-	free(res);
-	printf("(%s)", stock);
-	res = get_line_decale(&stock);
-	printf("[%s]\n",res);
-	free(res);
-	// printf("(%s)", stock);
-	return (0);
+	i = 0;
+	if (s1 == NULL)
+		return (ft_strdup(s2));
+	s3 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (s3 == NULL)
+		return (free(s1), NULL);
+	j = 0;
+	while (s1[i])
+	{
+		s3[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+		s3[i++] = s2[j++];
+	s3[i] = '\0';
+	return (free(s1), s3);
 }
