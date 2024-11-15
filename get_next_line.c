@@ -49,7 +49,7 @@ char	*get_next_line(int fd)
 			break ;
 	}
 	res = get_line_decale(&stock);
-	if (res[0] == '\0')
+	if (res && res[0] == '\0')
 		return (free(res), NULL);
 	return (res);
 }
