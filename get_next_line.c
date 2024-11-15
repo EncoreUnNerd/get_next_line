@@ -33,7 +33,7 @@ char	*get_next_line(int fd)
 	char		*res;
 	static char	*stock = NULL;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	rd_bytes = 1;
 	while (rd_bytes > 0)
