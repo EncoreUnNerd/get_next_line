@@ -42,8 +42,6 @@ char	*get_next_line(int fd)
 		if (rd_bytes < 0)
 			return (free(stock), NULL);
 		buffer[rd_bytes] = '\0';
-		if (rd_bytes == 0)
-			break ;
 		stock = ft_strjoin(stock, buffer);
 		if (ft_is_endline(buffer))
 			break ;
@@ -57,11 +55,12 @@ char	*get_next_line(int fd)
 int	main(void)
 {
 	int	fd = open("exemple.txt", O_RDONLY);
-	char	*te = get_next_line(fd);
+	char	*te;
+	te = get_next_line(fd);
 	while (te != NULL)
 	{
 		printf("%s", te);
-		free(te);
+		// free(te);
 		te = get_next_line(fd);
 	}
 	return (0);
