@@ -30,6 +30,7 @@ char	*get_next_line(int fd)
 {
 	char		buffer[BUFFER_SIZE + 1];
 	int			rd_bytes;
+	char		*res;
 	static char	*stock = NULL;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -41,11 +42,14 @@ char	*get_next_line(int fd)
 		if (rd_bytes < 0)
 			return (free(stock), NULL);
 		buffer[rd_bytes] = '\0';
+		if (rd_bytes == 0)
+			break ;
 		stock = ft_strjoin(stock, buffer);
 		if (ft_is_endline(buffer))
 			break ;
 	}
-	return (get_line_decale(&stock));
+	res = get_line_decale(&stock);
+	return (res);
 }
 
 #include <fcntl.h>
@@ -57,7 +61,7 @@ int	main(void)
 	while (te != NULL)
 	{
 		printf("%s", te);
-		// free(te);
+		free(te);
 		te = get_next_line(fd);
 	}
 	return (0);
