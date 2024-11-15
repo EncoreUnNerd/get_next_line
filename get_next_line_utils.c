@@ -22,6 +22,8 @@ char	*ft_strdup(char *src)
 	while (src[src_len])
 		src_len++;
 	res = malloc(src_len + 1);
+	if (!res)
+		return (NULL);
 	i = 0;
 	while (i < src_len + 1)
 	{
@@ -73,15 +75,15 @@ char	*get_line_decale(char	**stock)
 		i++;
 	if ((*stock)[i] == '\0')
 	{
-		res = ft_strdup(*stock);
-		free(*stock);
+		res = ft_strdup((*stock));
+		free((*stock));
 		return (res);
 	}
 	else
 	{
-		res = ft_strdup_till_return(*stock);
-		temp = ft_strdup(*stock + ft_strlen(res));
-		free(*stock);
+		res = ft_strdup_till_return((*stock));
+		temp = ft_strdup((*stock) + ft_strlen(res));
+		free((*stock));
 		*stock = ft_strdup(temp);
 		free(temp);
 		return (res);
