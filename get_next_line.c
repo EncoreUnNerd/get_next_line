@@ -42,6 +42,8 @@ char	*get_next_line(int fd)
 		if (rd_bytes < 0)
 			return (free(stock), NULL);
 		buffer[rd_bytes] = '\0';
+		if (rd_bytes == 0)
+			break ;
 		stock = ft_strjoin(stock, buffer);
 		if (ft_is_endline(buffer))
 			break ;
