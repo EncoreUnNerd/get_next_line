@@ -40,7 +40,7 @@ char	*get_next_line(int fd)
 	{
 		rd_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (rd_bytes < 0)
-			return (free(stock), NULL);
+			return (NULL);
 		buffer[rd_bytes] = '\0';
 		if (rd_bytes == 0)
 			break ;
