@@ -79,6 +79,7 @@ char	*get_line_decale(char	**stock)
 	{
 		res = ft_strdup((*stock));
 		free((*stock));
+		(*stock) = NULL;
 		return (res);
 	}
 	else
