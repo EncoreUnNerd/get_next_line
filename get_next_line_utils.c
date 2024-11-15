@@ -108,6 +108,6 @@ int main(void)
 	res = get_line_decale(&stock);
 	printf("[%s]\n",res);
 	free(res);
-	printf("(%s)", stock);
+	// printf("(%s)", stock);
 	return (0);
 }
