@@ -21,7 +21,10 @@ char	*optim(char *s1, t_buffer *buffer, int i)
 
 	j = ft_strlen(s1);
 	res = malloc(ft_strlen(s1) + i + 2);
+	if (!res)
+		return (free(s1), NULL);
 	res = ft_strcpy(res, s1, 0);
+	free(s1);
 	i = 0;
 	while (buffer->buffer[i] != '\n')
 		res[j++] = buffer->buffer[i++];
@@ -47,8 +50,11 @@ char	*ft_strjoin(char *s1, t_buffer *buffer)
 	else
 	{
 		res = malloc(ft_strlen(s1) + ft_strlen(buffer->buffer) + 1);
+		if (!res)
+			return (free(s1), NULL);
 		res = ft_strcpy(res, s1, 0);
 		res = ft_strcpy(res, buffer->buffer, ft_strlen(s1));
+		free(s1);
 		buffer->cursor = 0;
 	}
 	return (res);
