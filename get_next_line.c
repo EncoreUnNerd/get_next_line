@@ -21,7 +21,7 @@ char	*optim(char *s1, t_buffer *buffer, int i)
 
 	j = ft_strlen(s1);
 	res = malloc(ft_strlen(s1) + i + 2);
-	res = ft_strcpy(res, s1);
+	res = ft_strcpy(res, s1, 0);
 	i = 0;
 	while (buffer->buffer[i] != '\n')
 		res[j++] = buffer->buffer[i++];
@@ -42,13 +42,13 @@ char	*ft_strjoin(char *s1, t_buffer *buffer)
 	if (!s1)
 		return (get_line_from_buff(buffer));
 	i = check_if_endline(buffer->buffer);
-	if (i > 0)
+	if (i >= 0)
 		res = optim(s1, buffer, i);
 	else
 	{
 		res = malloc(ft_strlen(s1) + ft_strlen(buffer->buffer) + 1);
-		res = ft_strcpy(res, s1);
-		res = ft_strcpy(res + ft_strlen(s1), buffer->buffer);
+		res = ft_strcpy(res, s1, 0);
+		res = ft_strcpy(res, buffer->buffer, ft_strlen(s1));
 		buffer->cursor = 0;
 	}
 	return (res);
@@ -81,7 +81,7 @@ char	*get_next_line(int fd)
 		}
 		buffer.buffer[rd_bytes] = '\0';
 		res = ft_strjoin(res, &buffer);
-		if (buffer.cursor != 0)
+		if (check_if_endline(res) >= 0)
 			break ;
 	}
 	if (res && res[0] == '\0')
@@ -96,7 +96,7 @@ int main(void)
 	res = get_next_line(fd);
 	while (res)
 	{
-		printf("[%s]", res);
+		printf("%s", res);
 		free(res);
 		res = get_next_line(fd);
 	}

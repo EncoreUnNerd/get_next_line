@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
+#  define BUFFER_SIZE 10000000000
 # endif
 
 # include <stdlib.h>
@@ -27,7 +27,7 @@ typedef struct s_buffer
 }	t_buffer;
 
 char	*get_next_line(int fd);
-char	*ft_strcpy(char *dest, const char *src);
+char	*ft_strcpy(char *dest, const char *src, int decale);
 char	*get_line_from_buff(t_buffer *buffer);
 char	*ft_strdup(const char *src);
 int		ft_strlen(const char *str);

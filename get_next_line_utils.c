@@ -23,14 +23,14 @@ int	check_if_endline(char *str)
 			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 int	ft_strlen(const char *str)
 {
 	int	length;
 
-	length = 2;
+	length = 0;
 	while (str[length] != '\0')
 		length++;
 	return (length);
@@ -83,16 +83,16 @@ char	*get_line_from_buff(t_buffer *buffer)
 	}
 }
 
-char	*ft_strcpy(char *dest, const char *src)
+char	*ft_strcpy(char *dest, const char *src, int decale)
 {
 	int	i;
 
 	i = 0;
 	while (src[i] != '\0')
 	{
-		dest[i] = src[i];
+		dest[decale + i] = src[i];
 		i++;
 	}
-	dest[i] = '\0';
+	dest[decale + i] = '\0';
 	return (dest);
 }
