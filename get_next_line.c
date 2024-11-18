@@ -60,11 +60,34 @@ char	*ft_strjoin(char *s1, t_buffer *buffer)
 	return (res);
 }
 
+char	*reading(char	*res, t_buffer *buffer, int fd)
+{
+	int	rd_bytes;
+
+	rd_bytes = 1;
+	while (rd_bytes > 0)
+	{
+		rd_bytes = read(fd, buffer->buffer, BUFFER_SIZE);
+		if (rd_bytes < 0)
+		{
+			if (res != NULL)
+				free(res);
+			return (NULL);
+		}
+		buffer->buffer[rd_bytes] = '\0';
+		res = ft_strjoin(res, buffer);
+		if (check_if_endline(res) >= 0)
+			break ;
+	}
+	if (res && res[0] == '\0')
+		return (free(res), NULL);
+	return (res);
+}
+
 char	*get_next_line(int fd)
 {
 	static t_buffer	buffer = {.cursor = 0};
 	char			*res;
-	int				rd_bytes;
 
 	res = NULL;
 	if (BUFFER_SIZE < 0 || fd < 0)
@@ -75,35 +98,5 @@ char	*get_next_line(int fd)
 		if (buffer.cursor != 0)
 			return (res);
 	}
-	rd_bytes = 1;
-	while (rd_bytes > 0)
-	{
-		rd_bytes = read(fd, buffer.buffer, BUFFER_SIZE);
-		if (rd_bytes < 0)
-		{
-			if (res != NULL)
-				free(res);
-			return (NULL);
-		}
-		buffer.buffer[rd_bytes] = '\0';
-		res = ft_strjoin(res, &buffer);
-		if (check_if_endline(res) >= 0)
-			break ;
-	}
-	if (res && res[0] == '\0')
-		return (free(res), NULL);
-	return (res);
-}
-
-int main(void)
-{
-	int fd = open("exemple.txt", O_RDONLY);
-	char *res;
-	res = get_next_line(fd);
-	while (res)
-	{
-		printf("%s", res);
-		free(res);
-		res = get_next_line(fd);
-	}
+	return (reading(res, &buffer, fd));
 }
