@@ -12,107 +12,16 @@
 
 #include "get_next_line.h"
 
-char	*ft_strdup(const char *src)
-{
-	char	*res;
-	int		src_len;
-	int		i;
+// debut
+// verification que cursor est a 0
+// si cursor n'est pas a 0 alors on recupere se qu'il y a dans le buffer pour le mettre dans res jusqu'a un \n ou au \0 (la fonction qui fait ça modifie cursor pour le mettre a l'index du \n si il y en a un sinon il met cursor a 0)
+// si cursor est pas a 0 apres ça on retourne res
+// si cursor est a 0 on passe a la suite
 
-	src_len = 0;
-	while (src[src_len])
-		src_len++;
-	res = malloc(src_len + 1);
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (i < src_len)
-	{
-		res[i] = src[i];
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
-}
-
-char	*ft_strdup_till_return(char *src)
-{
-	char	*res;
-	int		src_len;
-	int		i;
-
-	src_len = 0;
-	while (src[src_len] != '\n')
-		src_len++;
-	res = malloc(src_len + 2);
-	i = 0;
-	while (i <= src_len)
-	{
-		res[i] = src[i];
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
-}
-
-int	ft_strlen(const char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-		i++;
-	return (i);
-}
-
-char	*get_line_decale(char	**stock)
-{
-	int		i;
-	char	*temp;
-	char	*res;
-
-	i = 0;
-	if ((*stock) == NULL)
-		return (NULL);
-	while ((*stock)[i] != '\n' && (*stock)[i] != '\0')
-		i++;
-	if ((*stock)[i] == '\0')
-	{
-		res = ft_strdup((*stock));
-		free((*stock));
-		(*stock) = NULL;
-		return (res);
-	}
-	else
-	{
-		res = ft_strdup_till_return((*stock));
-		temp = ft_strdup((*stock) + ft_strlen(res));
-		free((*stock));
-		*stock = ft_strdup(temp);
-		free(temp);
-		return (res);
-	}
-}
-
-char	*ft_strjoin(char *s1, const char *s2)
-{
-	char	*s3;
-	int		i;
-	int		j;
-
-	i = 0;
-	if (s1 == NULL)
-		return (ft_strdup(s2));
-	s3 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (s3 == NULL)
-		return (free(s1), NULL);
-	j = 0;
-	while (s1[i])
-	{
-		s3[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-		s3[i++] = s2[j++];
-	s3[i] = '\0';
-	return (free(s1), s3);
-}
+// reading
+// on lit dans le fd pour mettre dans buffer
+// si rd_bytes est inferieur a 0 on retourne NULL et on free res si il est pas null
+// si rd_bytes est a 0 on retourne null (⚠️ a verifier)
+// on met un \0 a la fin du buffer soit buffer[rd_bytes] = '\0'
+// on ajoute buffer a res, sachant que le join ne va add que j'usqu'au \n ou \0 mais si \n il va mettre cursor a l'index du \n
+// donc si cursor est diff de 0 on sort de la boucle et on retourne res
