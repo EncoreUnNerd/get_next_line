@@ -20,6 +20,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_buffer
+{
+	char	buffer[BUFFER_SIZE + 1];
+	int		cursor;
+}	t_buffer;
 
+char	*ft_strjoin(char *str, t_buffer *buffer);
+char	*get_line_from_buffer(t_buffer *buffer);
+char	*get_next_line(int fd);
 
 #endif
