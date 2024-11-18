@@ -58,7 +58,6 @@ char	*get_line_from_buff(t_buffer *buffer)
 {
 	char	*res;
 	int		i;
-	int		j;
 
 	i = buffer->cursor;
 	while (buffer->buffer[i] != '\n' && buffer->buffer[i] != '\0')
