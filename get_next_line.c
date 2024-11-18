@@ -43,7 +43,7 @@ char	*ft_strjoin(char *s1, t_buffer *buffer)
 		return (get_line_from_buff(buffer));
 	i = check_if_endline(buffer->buffer);
 	if (i > 0)
-		res = optim(s1, buffer);
+		res = optim(s1, buffer, i);
 	else
 	{
 		res = malloc(ft_strlen(s1) + ft_strlen(buffer->buffer) + 1);
