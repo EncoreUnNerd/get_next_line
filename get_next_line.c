@@ -6,13 +6,11 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:31:27 by mhenin            #+#    #+#             */
-/*   Updated: 2024/10/31 11:31:29 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/18 17:04:12 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <fcntl.h>
 
 char	*optim(char *s1, t_buffer *buffer, int i)
 {
@@ -76,6 +74,8 @@ char	*reading(char	*res, t_buffer *buffer, int fd)
 		}
 		buffer->buffer[rd_bytes] = '\0';
 		res = ft_strjoin(res, buffer);
+		if (!res)
+			return (NULL);
 		if (check_if_endline(res) >= 0)
 			break ;
 	}
@@ -95,6 +95,8 @@ char	*get_next_line(int fd)
 	if (buffer.cursor != 0)
 	{
 		res = get_line_from_buff(&buffer);
+		if (!res)
+			return (NULL);
 		if (buffer.cursor != 0)
 			return (res);
 	}

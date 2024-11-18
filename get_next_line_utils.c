@@ -65,6 +65,8 @@ char	*get_line_from_buff(t_buffer *buffer)
 	if (buffer->buffer[i] == '\n')
 	{
 		res = malloc((i + 2) - buffer->cursor);
+		if (!res)
+			return (NULL);
 		i = 0;
 		while (buffer->buffer[buffer->cursor] != '\n')
 			res[i++] = buffer->buffer[buffer->cursor++];
@@ -74,12 +76,9 @@ char	*get_line_from_buff(t_buffer *buffer)
 			buffer->cursor = 0;
 		return (res);
 	}
-	else
-	{
-		res = ft_strdup(buffer->buffer + buffer->cursor);
-		buffer->cursor = 0;
-		return (res);
-	}
+	res = ft_strdup(buffer->buffer + buffer->cursor);
+	buffer->cursor = 0;
+	return (res);
 }
 
 char	*ft_strcpy(char *dest, const char *src, int decale)
