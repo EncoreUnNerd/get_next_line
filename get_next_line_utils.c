@@ -12,6 +12,7 @@
 
 #include "get_next_line.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int	check_if_endline(char *str)
 {
@@ -27,13 +28,14 @@ int	check_if_endline(char *str)
 	return (0);
 }
 
-int ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-    int length = 0;
+	int	length;
 
-    while (str[length] != '\0')
-        length++;
-    return (length);
+	length = 2;
+	while (str[length] != '\0')
+		length++;
+	return (length);
 }
 
 char	*ft_strdup(const char *src)
@@ -97,32 +99,37 @@ char	*ft_strcpy(char *dest, const char *src)
 	return (dest);
 }
 
+char	*optim(char *s1, t_buffer *buffer)
+{
+	int		i;
+	int		j;
+	char	*res;
+
+	j = ft_strlen(s1);
+	res = malloc(ft_strlen(s1) + i + 2);
+	res = ft_strcpy(res, s1);
+	i = 0;
+	while (buffer->buffer[i] != '\n')
+		res[j++] = buffer->buffer[i++];
+	res[j] = '\n';
+	res[++j] = '\0';
+	if (buffer->buffer[i + 1] == '\0')
+		buffer->cursor = 0;
+	else
+		buffer->cursor = i + 1;
+	return (res);
+}
+
 char	*ft_strjoin(char *s1, t_buffer *buffer)
 {
 	int		i;
-	int 	j;
-	int		k;
 	char	*res;
 
 	if (!s1)
 		return (get_line_from_buff(buffer));
 	i = check_if_endline(buffer->buffer);
-	j = 0;
 	if (i > 0)
-	{
-		j = ft_strlen(s1);
-		res = malloc(j + i + 2);
-		res = ft_strcpy(res, s1);
-		k = 0;
-		while (buffer->buffer[k] != '\n')
-			res[j++] = buffer->buffer[k++];
-		res[j] = '\n';
-		res[++j] = '\0';
-		if (buffer->buffer[i + 1] == '\0')
-			buffer->cursor = 0;
-		else
-			buffer->cursor = k + 1;
-	}
+		res = optim(s1, buffer);
 	else
 	{
 		res = malloc(ft_strlen(s1) + ft_strlen(buffer->buffer) + 1);
@@ -133,10 +140,8 @@ char	*ft_strjoin(char *s1, t_buffer *buffer)
 	return (res);
 }
 
-#include <stdio.h>
-
 int main() {
-    char s1[] = "Hello, ";
+    char *s1 = "hello ";
     t_buffer buffer;
     ft_strcpy(buffer.buffer, "world!\nThis is a test.");
     buffer.cursor = 0;
@@ -144,7 +149,7 @@ int main() {
     char *result = ft_strjoin(s1, &buffer);
     printf("Result: %s", result);
     printf("Result: %d\n", buffer.cursor);
-    printf("Result: %s", get_line_from_buff(&buffer));
+    // printf("Result: %s", get_line_from_buff(&buffer));
     free(result);
     return 0;
 }
