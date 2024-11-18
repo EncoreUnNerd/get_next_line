@@ -27,5 +27,10 @@ typedef struct s_buffer
 }	t_buffer;
 
 char	*get_next_line(int fd);
+char	*ft_strcpy(char *dest, const char *src);
+char	*get_line_from_buff(t_buffer *buffer);
+char	*ft_strdup(const char *src);
+int		ft_strlen(const char *str);
+int		check_if_endline(char *str);
 
 #endif

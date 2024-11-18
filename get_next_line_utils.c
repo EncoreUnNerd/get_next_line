@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 int	check_if_endline(char *str)
 {
@@ -97,59 +95,4 @@ char	*ft_strcpy(char *dest, const char *src)
 	}
 	dest[i] = '\0';
 	return (dest);
-}
-
-char	*optim(char *s1, t_buffer *buffer)
-{
-	int		i;
-	int		j;
-	char	*res;
-
-	j = ft_strlen(s1);
-	res = malloc(ft_strlen(s1) + i + 2);
-	res = ft_strcpy(res, s1);
-	i = 0;
-	while (buffer->buffer[i] != '\n')
-		res[j++] = buffer->buffer[i++];
-	res[j] = '\n';
-	res[++j] = '\0';
-	if (buffer->buffer[i + 1] == '\0')
-		buffer->cursor = 0;
-	else
-		buffer->cursor = i + 1;
-	return (res);
-}
-
-char	*ft_strjoin(char *s1, t_buffer *buffer)
-{
-	int		i;
-	char	*res;
-
-	if (!s1)
-		return (get_line_from_buff(buffer));
-	i = check_if_endline(buffer->buffer);
-	if (i > 0)
-		res = optim(s1, buffer);
-	else
-	{
-		res = malloc(ft_strlen(s1) + ft_strlen(buffer->buffer) + 1);
-		res = ft_strcpy(res, s1);
-		res = ft_strcpy(res + ft_strlen(s1), buffer->buffer);
-		buffer->cursor = 0;
-	}
-	return (res);
-}
-
-int main() {
-    char *s1 = "hello ";
-    t_buffer buffer;
-    ft_strcpy(buffer.buffer, "world!\nThis is a test.");
-    buffer.cursor = 0;
-
-    char *result = ft_strjoin(s1, &buffer);
-    printf("Result: %s", result);
-    printf("Result: %d\n", buffer.cursor);
-    // printf("Result: %s", get_line_from_buff(&buffer));
-    free(result);
-    return 0;
 }
