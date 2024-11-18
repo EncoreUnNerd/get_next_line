@@ -14,9 +14,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-char	*optim(char *s1, t_buffer *buffer)
+char	*optim(char *s1, t_buffer *buffer, int i)
 {
-	int		i;
 	int		j;
 	char	*res;
 
@@ -70,6 +69,7 @@ char	*get_next_line(int fd)
 		if (buffer.cursor != 0)
 			return (res);
 	}
+	rd_bytes = 1;
 	while (rd_bytes > 0)
 	{
 		rd_bytes = read(fd, buffer.buffer, BUFFER_SIZE);
